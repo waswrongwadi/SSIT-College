@@ -28,22 +28,15 @@
   .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
   
   /* Scroll Animation Base Styles */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
   
-  .info-card, .milestone-item, .value-card {
+  .info-card, .milestone-item, .value-card, .faculty-member {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .info-card.visible, .milestone-item.visible, .value-card.visible {
+  .info-card.visible, .milestone-item.visible, .value-card.visible, .faculty-member.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -58,6 +51,10 @@
   .value-card:nth-child(1) { transition-delay: 0s; }
   .value-card:nth-child(2) { transition-delay: 0.1s; }
   .value-card:nth-child(3) { transition-delay: 0.2s; }
+  .faculty-member:nth-child(1) { transition-delay: 0s; }
+  .faculty-member:nth-child(2) { transition-delay: 0.05s; }
+  .faculty-member:nth-child(3) { transition-delay: 0.1s; }
+  .faculty-member:nth-child(4) { transition-delay: 0.15s; }
   
   .section-label, .section-title, .section-intro {
     opacity: 0;
@@ -111,8 +108,9 @@
   .mobile-nav .cta-apply-mobile { background: var(--crimson); color: var(--white) !important; text-align: center; margin-top: 0.8rem; border-radius: 4px; }
   
   .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.6rem 0; position: relative; }
-  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; flex-wrap: wrap; }
   .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 0.8rem; font-family: var(--sans); font-size: 13px; outline: none; background: var(--white); min-width: 160px; }
+  .search-form input:focus { border-color: var(--crimson); }
   .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1rem; font-family: var(--sans); font-size: 13px; cursor: pointer; white-space: nowrap; }
   .search-form .clear-btn { background: var(--mid); }
   .search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 1px solid var(--border); border-top: none; max-height: 400px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -170,7 +168,7 @@
   .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; white-space: nowrap; }
   .btn-primary:hover { background: var(--crimson-light); }
   
-  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; }
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; font-size: 1.5rem; }
   .back-to-top.visible { display: flex; }
   .back-to-top:hover { background: var(--crimson-dark); }
   
@@ -248,6 +246,7 @@
     </a>
     
     <nav class="desktop-nav">
+      <a href="index.html">Home</a>
       <a href="about.html" class="active">About Us</a>
       <a href="courses.html">Courses</a>
       <a href="events.html">Events</a>
@@ -267,6 +266,7 @@
   </div>
   
   <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
     <a href="about.html" class="active">About Us</a>
     <a href="courses.html">Courses</a>
     <a href="events.html">Events</a>
@@ -492,15 +492,16 @@
   
   // Search Functionality
   const searchContent = [
-    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated teacher education' },
+    { title: 'Home - SSIT Ratlam', page: 'Home', url: 'index.html', content: 'teacher education institute B.Ed D.El.Ed NCTE approved Ratlam' },
+    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated' },
     { title: 'B.Ed Programme', page: 'Courses', url: 'courses.html#bed', content: 'Bachelor of Education 2 years secondary teacher training pedagogy' },
     { title: 'D.El.Ed Programme', page: 'Courses', url: 'courses.html#deled', content: 'Diploma Elementary Education primary teacher 2 years' },
+    { title: 'Annual Sports Meet', page: 'Events', url: 'events.html', content: 'January sports athletics cricket football championship' },
+    { title: 'Tech Fest', page: 'Events', url: 'events.html', content: 'February educational technology EdTech workshops' },
+    { title: 'Graduation Ceremony', page: 'Events', url: 'events.html', content: 'April graduation convocation students achievements' },
     { title: 'Campus Infrastructure', page: 'Infrastructure', url: 'infrastructure.html', content: 'Classrooms library computer labs science sports facilities' },
-    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
-    { title: 'Events Calendar', page: 'Events', url: 'events.html', content: 'Annual sports tech fest parent meeting graduation ceremony' },
     { title: 'Photo Gallery', page: 'Gallery', url: 'gallery.html', content: 'Campus photos classrooms library events graduation pictures' },
-    { title: 'Faculty Team', page: 'About Us', url: 'about.html', content: 'Experienced teachers professors academic staff' },
-    { title: 'Mission & Vision', page: 'About Us', url: 'about.html', content: 'Educational excellence teacher training values philosophy' },
+    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
   ];
   
   const searchForm = document.getElementById('searchForm');
@@ -508,57 +509,65 @@
   const searchResults = document.getElementById('searchResults');
   const clearBtn = document.getElementById('clearBtn');
   
-  searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    performSearch();
-  });
-  
-  searchInput.addEventListener('input', function() {
-    if (this.value.trim()) {
-      clearBtn.style.display = 'block';
-    } else {
-      clearBtn.style.display = 'none';
+  if (searchForm && searchInput && searchResults && clearBtn) {
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      performSearch();
+    });
+    
+    searchInput.addEventListener('input', function() {
+      if (this.value.trim()) {
+        clearBtn.style.display = 'block';
+        if (this.value.trim().length > 0) {
+          performSearch();
+        }
+      } else {
+        clearBtn.style.display = 'none';
+        searchResults.classList.remove('active');
+      }
+    });
+    
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
       searchResults.classList.remove('active');
+      this.style.display = 'none';
+    });
+    
+    function performSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        searchResults.classList.remove('active');
+        return;
+      }
+      
+      const results = searchContent.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.content.toLowerCase().includes(query)
+      );
+      
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+      } else {
+        searchResults.innerHTML = results.map(result => `
+          <div class="search-result-item">
+            <a href="${result.url}">
+              <div class="search-result-title">${result.title}</div>
+              <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
+              <div class="search-result-page">Page: ${result.page}</div>
+            </a>
+          </div>
+        `).join('');
+      }
+      
+      searchResults.classList.add('active');
     }
-  });
-  
-  clearBtn.addEventListener('click', function() {
-    searchInput.value = '';
-    searchResults.classList.remove('active');
-    this.style.display = 'none';
-  });
-  
-  function performSearch() {
-    const query = searchInput.value.trim().toLowerCase();
-    if (!query) return;
     
-    const results = searchContent.filter(item => 
-      item.title.toLowerCase().includes(query) || 
-      item.content.toLowerCase().includes(query)
-    );
-    
-    if (results.length === 0) {
-      searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
-    } else {
-      searchResults.innerHTML = results.map(result => `
-        <div class="search-result-item">
-          <a href="${result.url}">
-            <div class="search-result-title">${result.title}</div>
-            <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
-            <div class="search-result-page">Page: ${result.page}</div>
-          </a>
-        </div>
-      `).join('');
-    }
-    
-    searchResults.classList.add('active');
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-bar')) {
+        searchResults.classList.remove('active');
+      }
+    });
   }
-  
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-bar')) {
-      searchResults.classList.remove('active');
-    }
-  });
   
   // Back to Top
   const backToTop = document.getElementById('backToTop');
@@ -571,9 +580,11 @@
     }
   });
   
-  backToTop.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (backToTop) {
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   
   // Scroll Animations
   (function() {
