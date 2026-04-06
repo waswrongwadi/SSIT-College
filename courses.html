@@ -28,15 +28,8 @@
   .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
   
   /* Scroll Animation Base Styles */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
   
   .course-detail, .benefit-card {
     opacity: 0;
@@ -47,6 +40,15 @@
     opacity: 1;
     transform: translateY(0);
   }
+  
+  .course-detail:nth-child(1) { transition-delay: 0s; }
+  .course-detail:nth-child(2) { transition-delay: 0.15s; }
+  .benefit-card:nth-child(1) { transition-delay: 0s; }
+  .benefit-card:nth-child(2) { transition-delay: 0.05s; }
+  .benefit-card:nth-child(3) { transition-delay: 0.1s; }
+  .benefit-card:nth-child(4) { transition-delay: 0.15s; }
+  .benefit-card:nth-child(5) { transition-delay: 0.2s; }
+  .benefit-card:nth-child(6) { transition-delay: 0.25s; }
   
   .section-label, .section-title, .section-intro {
     opacity: 0;
@@ -100,8 +102,9 @@
   .mobile-nav .cta-apply-mobile { background: var(--crimson); color: var(--white) !important; text-align: center; margin-top: 0.8rem; border-radius: 4px; }
   
   .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.6rem 0; position: relative; }
-  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; flex-wrap: wrap; }
   .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 0.8rem; font-family: var(--sans); font-size: 13px; outline: none; background: var(--white); min-width: 160px; }
+  .search-form input:focus { border-color: var(--crimson); }
   .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1rem; font-family: var(--sans); font-size: 13px; cursor: pointer; white-space: nowrap; }
   .search-form .clear-btn { background: var(--mid); }
   .search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 1px solid var(--border); border-top: none; max-height: 400px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -130,35 +133,34 @@
   .section-title { font-family: var(--serif); font-size: clamp(1.3rem, 5vw, 2.2rem); font-weight: 700; color: var(--black); line-height: 1.2; margin-bottom: 0.8rem; }
   .section-intro { font-size: 14px; color: var(--mid); max-width: 760px; line-height: 1.6; margin-bottom: 1.5rem; }
   
-  .course-detail { background: var(--white); border-left: 4px solid var(--crimson); padding: 2.5rem; margin-bottom: 3rem; scroll-margin-top: 120px; }
-  .course-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .course-title-block h2 { font-family: var(--serif); font-size: clamp(1.4rem, 4vw, 2rem); color: var(--crimson); margin-bottom: 0.5rem; }
-  .course-subtitle { font-size: 14px; color: var(--mid); }
-  .course-badge { background: var(--crimson); color: var(--white); padding: 0.5rem 1rem; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 2px; white-space: nowrap; }
+  .course-detail { background: var(--white); border-left: 4px solid var(--crimson); padding: 2rem; margin-bottom: 2.5rem; scroll-margin-top: 120px; }
+  .course-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .course-title-block h2 { font-family: var(--serif); font-size: clamp(1.3rem, 4vw, 1.8rem); color: var(--crimson); margin-bottom: 0.3rem; }
+  .course-subtitle { font-size: 13px; color: var(--mid); }
+  .course-badge { background: var(--crimson); color: var(--white); padding: 0.4rem 0.8rem; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 2px; white-space: nowrap; }
   
-  .course-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: var(--light); padding: 1.5rem; margin-bottom: 1.5rem; }
-  .meta-item { }
-  .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem; }
-  .meta-value { font-family: var(--serif); font-size: 1.1rem; color: var(--black); font-weight: 600; }
+  .course-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; background: var(--light); padding: 1.2rem; margin-bottom: 1.5rem; }
+  .meta-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.2rem; }
+  .meta-value { font-family: var(--serif); font-size: 1rem; color: var(--black); font-weight: 600; }
   
-  .course-content h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--black); margin: 1.5rem 0 0.8rem; }
-  .course-content p { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1rem; }
-  .course-content ul { margin: 1rem 0 1.5rem 1.5rem; }
-  .course-content li { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 0.5rem; }
+  .course-content h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--black); margin: 1.2rem 0 0.6rem; }
+  .course-content p { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 0.8rem; }
+  .course-content ul { margin: 0.8rem 0 1.2rem 1.5rem; }
+  .course-content li { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 0.4rem; }
   
   .course-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
-  .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; white-space: nowrap; }
+  .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.6rem 1.2rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; white-space: nowrap; }
   .btn-primary:hover { background: var(--crimson-light); }
-  .btn-outline { background: transparent; color: var(--crimson); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: 2px solid var(--crimson); cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; white-space: nowrap; }
+  .btn-outline { background: transparent; color: var(--crimson); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.6rem 1.2rem; border: 2px solid var(--crimson); cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; white-space: nowrap; }
   .btn-outline:hover { background: var(--crimson); color: var(--white); }
   
   .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .benefit-card { background: var(--white); padding: 1.5rem; border-top: 3px solid var(--crimson); }
   .benefit-icon { font-size: 2rem; margin-bottom: 0.8rem; }
   .benefit-card h3 { font-family: var(--serif); font-size: 1rem; color: var(--black); margin-bottom: 0.5rem; }
-  .benefit-card p { font-size: 13px; color: var(--mid); line-height: 1.5; }
+  .benefit-card p { font-size: 12px; color: var(--mid); line-height: 1.5; }
   
-  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; }
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; font-size: 1.5rem; }
   .back-to-top.visible { display: flex; }
   .back-to-top:hover { background: var(--crimson-dark); }
   
@@ -195,7 +197,7 @@
     .topbar .institute-name { font-size: 10px; }
     .page-header { padding: 2rem 0 1.5rem; }
     .section { padding: 1.8rem 0; }
-    .course-detail { padding: 1.5rem; }
+    .course-detail { padding: 1.2rem; }
     .course-header { flex-direction: column; align-items: stretch; }
     .course-actions { flex-direction: column; }
     .course-actions .btn-primary, .course-actions .btn-outline { text-align: center; }
@@ -237,6 +239,7 @@
     </a>
     
     <nav class="desktop-nav">
+      <a href="index.html">Home</a>
       <a href="about.html">About Us</a>
       <a href="courses.html" class="active">Courses</a>
       <a href="events.html">Events</a>
@@ -256,6 +259,7 @@
   </div>
   
   <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="courses.html" class="active">Courses</a>
     <a href="events.html">Events</a>
@@ -325,7 +329,7 @@
       
       <div class="course-content">
         <h3>About the Programme</h3>
-        <p>The Bachelor of Education (B.Ed) programme is a professional undergraduate degree designed for graduates who aspire to teach at secondary and senior secondary levels (Classes 9-12). This comprehensive two-year programme combines theoretical knowledge with practical teaching experience, preparing educators who can inspire and guide young minds.</p>
+        <p>The Bachelor of Education (B.Ed) programme is a professional undergraduate degree designed for graduates who aspire to teach at secondary and senior secondary levels (Classes 9-12). This comprehensive two-year programme combines theoretical knowledge with practical teaching experience.</p>
         
         <h3>Eligibility Criteria</h3>
         <ul>
@@ -336,18 +340,14 @@
         
         <h3>Syllabus Highlights</h3>
         <ul>
-          <li><strong>Pedagogical Theory:</strong> Childhood and Growing Up, Learning and Teaching, Contemporary Indian Education</li>
-          <li><strong>Subject Methodology:</strong> Specialized teaching methods for chosen subjects (Mathematics, Science, Social Studies, Languages, etc.)</li>
-          <li><strong>Practical Training:</strong> School internships, lesson planning, classroom management, assessment techniques</li>
-          <li><strong>ICT Integration:</strong> Educational technology, digital resources, online teaching methodologies</li>
-          <li><strong>Research Skills:</strong> Educational research methods, action research, project work</li>
+          <li><strong>Pedagogical Theory:</strong> Childhood and Growing Up, Learning and Teaching</li>
+          <li><strong>Subject Methodology:</strong> Specialized teaching methods for chosen subjects</li>
+          <li><strong>Practical Training:</strong> School internships, lesson planning, classroom management</li>
+          <li><strong>ICT Integration:</strong> Educational technology, digital resources, online teaching</li>
         </ul>
         
         <h3>Career Opportunities</h3>
-        <p>B.Ed graduates are qualified to teach in secondary and senior secondary schools (Classes 9-12) across India. Career opportunities include positions in government schools, private schools, CBSE/ICSE/State Board institutions, international schools, and educational consultancy. Graduates can also pursue higher studies (M.Ed, Ph.D) or specialize in educational administration, curriculum development, and teacher training.</p>
-        
-        <h3>Fees Structure</h3>
-        <p><strong>Total Programme Fee:</strong> Contact admissions office for current fee structure and payment plans. Financial assistance and scholarships available for eligible candidates.</p>
+        <p>B.Ed graduates are qualified to teach in secondary and senior secondary schools across India. Career opportunities include government schools, private schools, CBSE/ICSE/State Board institutions, international schools, and educational consultancy.</p>
       </div>
       
       <div class="course-actions">
@@ -387,7 +387,7 @@
       
       <div class="course-content">
         <h3>About the Programme</h3>
-        <p>The Diploma in Elementary Education (D.El.Ed) is a nationally recognized diploma programme designed to prepare teachers for primary and upper-primary levels (Classes 1-8). Aligned with NCTE norms and Right to Education (RTE) mandates, this programme focuses on child-centered pedagogy, foundational literacy and numeracy, and creating inclusive learning environments.</p>
+        <p>The Diploma in Elementary Education (D.El.Ed) is a nationally recognized diploma programme designed to prepare teachers for primary and upper-primary levels (Classes 1-8). Aligned with NCTE norms and Right to Education (RTE) mandates.</p>
         
         <h3>Eligibility Criteria</h3>
         <ul>
@@ -398,19 +398,14 @@
         
         <h3>Syllabus Highlights</h3>
         <ul>
-          <li><strong>Child Development:</strong> Understanding child psychology, growth stages, learning patterns</li>
-          <li><strong>Foundational Skills:</strong> Language development, mathematics concepts, environmental studies</li>
-          <li><strong>Pedagogical Methods:</strong> Activity-based learning, play-way methods, storytelling techniques</li>
-          <li><strong>Inclusive Education:</strong> Teaching children with diverse needs, special education basics</li>
-          <li><strong>Practicum:</strong> Classroom observations, teaching practice in primary schools, lesson demonstrations</li>
-          <li><strong>Community Engagement:</strong> Parent-teacher collaboration, community resources in education</li>
+          <li><strong>Child Development:</strong> Understanding child psychology, growth stages</li>
+          <li><strong>Foundational Skills:</strong> Language development, mathematics concepts</li>
+          <li><strong>Pedagogical Methods:</strong> Activity-based learning, play-way methods</li>
+          <li><strong>Inclusive Education:</strong> Teaching children with diverse needs</li>
         </ul>
         
         <h3>Career Opportunities</h3>
-        <p>D.El.Ed graduates are eligible to teach in primary and upper-primary schools (Classes 1-8) as mandated by the RTE Act. Career opportunities include positions in government primary schools, private schools, NGO-run educational initiatives, and early childhood education centers. Graduates can also pursue B.Ed for secondary teaching or specialize in early childhood education, remedial teaching, and curriculum development for primary education.</p>
-        
-        <h3>Fees Structure</h3>
-        <p><strong>Total Programme Fee:</strong> Contact admissions office for current fee structure and installment options. Government scholarships and fee concessions available for eligible students.</p>
+        <p>D.El.Ed graduates are eligible to teach in primary and upper-primary schools as mandated by the RTE Act. Career opportunities include government primary schools, private schools, NGO-run educational initiatives, and early childhood education centers.</p>
       </div>
       
       <div class="course-actions">
@@ -537,13 +532,16 @@
   
   // Search Functionality
   const searchContent = [
-    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated teacher education' },
+    { title: 'Home - SSIT Ratlam', page: 'Home', url: 'index.html', content: 'teacher education institute B.Ed D.El.Ed NCTE approved Ratlam' },
+    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated' },
     { title: 'B.Ed Programme', page: 'Courses', url: 'courses.html#bed', content: 'Bachelor of Education 2 years secondary teacher training pedagogy 50% marks eligibility' },
     { title: 'D.El.Ed Programme', page: 'Courses', url: 'courses.html#deled', content: 'Diploma Elementary Education primary teacher 2 years 10+2 eligibility' },
+    { title: 'Annual Sports Meet', page: 'Events', url: 'events.html', content: 'January sports athletics cricket football championship' },
+    { title: 'Tech Fest', page: 'Events', url: 'events.html', content: 'February educational technology EdTech workshops' },
+    { title: 'Graduation Ceremony', page: 'Events', url: 'events.html', content: 'April graduation convocation students achievements' },
     { title: 'Campus Infrastructure', page: 'Infrastructure', url: 'infrastructure.html', content: 'Classrooms library computer labs science sports facilities' },
-    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
-    { title: 'Events Calendar', page: 'Events', url: 'events.html', content: 'Annual sports tech fest parent meeting graduation ceremony' },
     { title: 'Photo Gallery', page: 'Gallery', url: 'gallery.html', content: 'Campus photos classrooms library events graduation pictures' },
+    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
   ];
   
   const searchForm = document.getElementById('searchForm');
@@ -551,57 +549,65 @@
   const searchResults = document.getElementById('searchResults');
   const clearBtn = document.getElementById('clearBtn');
   
-  searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    performSearch();
-  });
-  
-  searchInput.addEventListener('input', function() {
-    if (this.value.trim()) {
-      clearBtn.style.display = 'block';
-    } else {
-      clearBtn.style.display = 'none';
+  if (searchForm && searchInput && searchResults && clearBtn) {
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      performSearch();
+    });
+    
+    searchInput.addEventListener('input', function() {
+      if (this.value.trim()) {
+        clearBtn.style.display = 'block';
+        if (this.value.trim().length > 0) {
+          performSearch();
+        }
+      } else {
+        clearBtn.style.display = 'none';
+        searchResults.classList.remove('active');
+      }
+    });
+    
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
       searchResults.classList.remove('active');
+      this.style.display = 'none';
+    });
+    
+    function performSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        searchResults.classList.remove('active');
+        return;
+      }
+      
+      const results = searchContent.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.content.toLowerCase().includes(query)
+      );
+      
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+      } else {
+        searchResults.innerHTML = results.map(result => `
+          <div class="search-result-item">
+            <a href="${result.url}">
+              <div class="search-result-title">${result.title}</div>
+              <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
+              <div class="search-result-page">Page: ${result.page}</div>
+            </a>
+          </div>
+        `).join('');
+      }
+      
+      searchResults.classList.add('active');
     }
-  });
-  
-  clearBtn.addEventListener('click', function() {
-    searchInput.value = '';
-    searchResults.classList.remove('active');
-    this.style.display = 'none';
-  });
-  
-  function performSearch() {
-    const query = searchInput.value.trim().toLowerCase();
-    if (!query) return;
     
-    const results = searchContent.filter(item => 
-      item.title.toLowerCase().includes(query) || 
-      item.content.toLowerCase().includes(query)
-    );
-    
-    if (results.length === 0) {
-      searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
-    } else {
-      searchResults.innerHTML = results.map(result => `
-        <div class="search-result-item">
-          <a href="${result.url}">
-            <div class="search-result-title">${result.title}</div>
-            <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
-            <div class="search-result-page">Page: ${result.page}</div>
-          </a>
-        </div>
-      `).join('');
-    }
-    
-    searchResults.classList.add('active');
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-bar')) {
+        searchResults.classList.remove('active');
+      }
+    });
   }
-  
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-bar')) {
-      searchResults.classList.remove('active');
-    }
-  });
   
   // Download Brochure Buttons
   const brochureButtons = document.querySelectorAll('.download-brochure');
@@ -612,7 +618,7 @@
     });
   });
   
-  // Check URL for hash and scroll to course
+  // Hash scroll for course sections
   window.addEventListener('load', function() {
     const hash = window.location.hash;
     if (hash) {
@@ -636,9 +642,11 @@
     }
   });
   
-  backToTop.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (backToTop) {
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   
   // Scroll Animations
   (function() {
