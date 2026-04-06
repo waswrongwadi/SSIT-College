@@ -28,22 +28,15 @@
   .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
   
   /* Scroll Animation Base Styles */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
   
-  .event-card {
+  .event-card, .past-event-item {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .event-card.visible {
+  .event-card.visible, .past-event-item.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -52,6 +45,12 @@
   .event-card:nth-child(2) { transition-delay: 0.1s; }
   .event-card:nth-child(3) { transition-delay: 0.2s; }
   .event-card:nth-child(4) { transition-delay: 0.3s; }
+  .past-event-item:nth-child(1) { transition-delay: 0s; }
+  .past-event-item:nth-child(2) { transition-delay: 0.05s; }
+  .past-event-item:nth-child(3) { transition-delay: 0.1s; }
+  .past-event-item:nth-child(4) { transition-delay: 0.15s; }
+  .past-event-item:nth-child(5) { transition-delay: 0.2s; }
+  .past-event-item:nth-child(6) { transition-delay: 0.25s; }
   
   .section-label, .section-title, .section-intro {
     opacity: 0;
@@ -105,8 +104,9 @@
   .mobile-nav .cta-apply-mobile { background: var(--crimson); color: var(--white) !important; text-align: center; margin-top: 0.8rem; border-radius: 4px; }
   
   .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.6rem 0; position: relative; }
-  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; flex-wrap: wrap; }
   .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 0.8rem; font-family: var(--sans); font-size: 13px; outline: none; background: var(--white); min-width: 160px; }
+  .search-form input:focus { border-color: var(--crimson); }
   .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1rem; font-family: var(--sans); font-size: 13px; cursor: pointer; white-space: nowrap; }
   .search-form .clear-btn { background: var(--mid); }
   .search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 1px solid var(--border); border-top: none; max-height: 400px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -142,7 +142,7 @@
   .event-date { font-family: var(--serif); font-size: 1.1rem; color: var(--crimson); font-weight: 700; margin-bottom: 0.5rem; }
   .event-card h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--black); margin-bottom: 0.6rem; }
   .event-desc { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 1rem; }
-  .event-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 12px; color: var(--mid); margin-bottom: 1rem; }
+  .event-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 12px; color: var(--mid); margin-bottom: 1rem; }
   .event-meta-item { display: flex; align-items: center; gap: 0.3rem; }
   .event-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   
@@ -152,12 +152,12 @@
   .btn-outline:hover { background: var(--crimson); color: var(--white); }
   
   .past-events-list { list-style: none; }
-  .past-event-item { padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .past-event-item { padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .past-event-info h4 { font-family: var(--serif); font-size: 1rem; color: var(--black); margin-bottom: 0.3rem; }
   .past-event-info p { font-size: 12px; color: var(--mid); }
   .past-event-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
   
-  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; }
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; font-size: 1.5rem; }
   .back-to-top.visible { display: flex; }
   .back-to-top:hover { background: var(--crimson-dark); }
   
@@ -197,6 +197,7 @@
     .event-actions { flex-direction: column; }
     .event-actions button, .event-actions a { text-align: center; width: 100%; }
     .past-event-item { flex-direction: column; align-items: flex-start; }
+    .past-event-date { white-space: normal; }
     .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
     .footer-bottom { flex-direction: column; text-align: center; }
   }
@@ -236,6 +237,7 @@
     </a>
     
     <nav class="desktop-nav">
+      <a href="index.html">Home</a>
       <a href="about.html">About Us</a>
       <a href="courses.html">Courses</a>
       <a href="events.html" class="active">Events</a>
@@ -255,6 +257,7 @@
   </div>
   
   <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="courses.html">Courses</a>
     <a href="events.html" class="active">Events</a>
@@ -486,15 +489,17 @@
   
   // Search Functionality
   const searchContent = [
-    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated teacher education' },
+    { title: 'Home - SSIT Ratlam', page: 'Home', url: 'index.html', content: 'teacher education institute B.Ed D.El.Ed NCTE approved Ratlam' },
+    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated' },
     { title: 'B.Ed Programme', page: 'Courses', url: 'courses.html#bed', content: 'Bachelor of Education 2 years secondary teacher training pedagogy' },
     { title: 'D.El.Ed Programme', page: 'Courses', url: 'courses.html#deled', content: 'Diploma Elementary Education primary teacher 2 years' },
-    { title: 'Campus Infrastructure', page: 'Infrastructure', url: 'infrastructure.html', content: 'Classrooms library computer labs science sports facilities' },
-    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
-    { title: 'Annual Sports Meet', page: 'Events', url: 'events.html', content: 'January sports athletics cricket football badminton championship' },
-    { title: 'Tech Fest', page: 'Events', url: 'events.html', content: 'February educational technology EdTech workshops exhibitions' },
+    { title: 'Annual Sports Meet', page: 'Events', url: 'events.html', content: 'January sports athletics cricket football championship' },
+    { title: 'Tech Fest', page: 'Events', url: 'events.html', content: 'February educational technology EdTech workshops' },
+    { title: 'Parent-Teacher Meeting', page: 'Events', url: 'events.html', content: 'March parent teacher interaction student progress discussion' },
     { title: 'Graduation Ceremony', page: 'Events', url: 'events.html', content: 'April graduation convocation students achievements celebration' },
+    { title: 'Campus Infrastructure', page: 'Infrastructure', url: 'infrastructure.html', content: 'Classrooms library computer labs science sports facilities' },
     { title: 'Photo Gallery', page: 'Gallery', url: 'gallery.html', content: 'Campus photos classrooms library events graduation pictures' },
+    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
   ];
   
   const searchForm = document.getElementById('searchForm');
@@ -502,57 +507,65 @@
   const searchResults = document.getElementById('searchResults');
   const clearBtn = document.getElementById('clearBtn');
   
-  searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    performSearch();
-  });
-  
-  searchInput.addEventListener('input', function() {
-    if (this.value.trim()) {
-      clearBtn.style.display = 'block';
-    } else {
-      clearBtn.style.display = 'none';
+  if (searchForm && searchInput && searchResults && clearBtn) {
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      performSearch();
+    });
+    
+    searchInput.addEventListener('input', function() {
+      if (this.value.trim()) {
+        clearBtn.style.display = 'block';
+        if (this.value.trim().length > 0) {
+          performSearch();
+        }
+      } else {
+        clearBtn.style.display = 'none';
+        searchResults.classList.remove('active');
+      }
+    });
+    
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
       searchResults.classList.remove('active');
+      this.style.display = 'none';
+    });
+    
+    function performSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        searchResults.classList.remove('active');
+        return;
+      }
+      
+      const results = searchContent.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.content.toLowerCase().includes(query)
+      );
+      
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+      } else {
+        searchResults.innerHTML = results.map(result => `
+          <div class="search-result-item">
+            <a href="${result.url}">
+              <div class="search-result-title">${result.title}</div>
+              <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
+              <div class="search-result-page">Page: ${result.page}</div>
+            </a>
+          </div>
+        `).join('');
+      }
+      
+      searchResults.classList.add('active');
     }
-  });
-  
-  clearBtn.addEventListener('click', function() {
-    searchInput.value = '';
-    searchResults.classList.remove('active');
-    this.style.display = 'none';
-  });
-  
-  function performSearch() {
-    const query = searchInput.value.trim().toLowerCase();
-    if (!query) return;
     
-    const results = searchContent.filter(item => 
-      item.title.toLowerCase().includes(query) || 
-      item.content.toLowerCase().includes(query)
-    );
-    
-    if (results.length === 0) {
-      searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
-    } else {
-      searchResults.innerHTML = results.map(result => `
-        <div class="search-result-item">
-          <a href="${result.url}">
-            <div class="search-result-title">${result.title}</div>
-            <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
-            <div class="search-result-page">Page: ${result.page}</div>
-          </a>
-        </div>
-      `).join('');
-    }
-    
-    searchResults.classList.add('active');
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-bar')) {
+        searchResults.classList.remove('active');
+      }
+    });
   }
-  
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-bar')) {
-      searchResults.classList.remove('active');
-    }
-  });
   
   // Event Registration Buttons
   const registerButtons = document.querySelectorAll('.register-btn');
@@ -574,9 +587,11 @@
     }
   });
   
-  backToTop.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (backToTop) {
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   
   // Scroll Animations
   (function() {
