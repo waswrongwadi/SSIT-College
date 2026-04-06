@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Courses — Shree Sai Institute of Technology, Ratlam</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --crimson: #A51C30;
+    --crimson-dark: #8b1528;
+    --crimson-light: #c4243c;
+    --gold: #C9A34E;
+    --gold-light: #e8c97a;
+    --black: #1a1a1a;
+    --dark: #2d2d2d;
+    --mid: #5a5a5a;
+    --muted: #888;
+    --light: #f5f3f0;
+    --border: #ddd8d0;
+    --white: #fff;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Source Sans 3', Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--black); background: var(--white); line-height: 1.6; overflow-x: hidden; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  
+  /* Scroll Animation Base Styles */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .course-detail, .benefit-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .course-detail.visible, .benefit-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .section-label, .section-title, .section-intro {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section-label.visible, .section-title.visible, .section-intro.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Topbar - Mobile Fixed */
+  .topbar { background: var(--crimson); color: rgba(255,255,255,0.85); font-family: var(--sans); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 0; }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  .topbar .institute-name { font-size: 11px; word-break: keep-all; white-space: normal; }
+  .topbar a { color: inherit; text-decoration: none; word-break: break-all; }
+  .topbar a:hover { color: var(--gold-light); }
+  .topbar-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  
+  header { background: var(--white); border-bottom: 3px solid var(--crimson); position: sticky; top: 0; z-index: 100; }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 2rem; max-width: 1160px; margin: 0 auto; }
+  .logo-block { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; flex-shrink: 0; }
+  .logo-emblem { width: 48px; height: 48px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-family: var(--serif); font-size: 16px; font-weight: 700; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name { font-family: var(--serif); font-size: 15px; color: var(--crimson); line-height: 1.2; font-weight: 700; }
+  .logo-sub { font-family: var(--sans); font-size: 9px; color: var(--mid); text-transform: uppercase; letter-spacing: 0.1em; }
+  
+  .desktop-nav { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+  .desktop-nav a { font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.5rem 0.7rem; position: relative; text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s; white-space: nowrap; }
+  .desktop-nav a.active { color: var(--crimson); }
+  .desktop-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0.7rem; right: 0.7rem; height: 3px; background: var(--crimson); transform: scaleX(0); transition: transform 0.2s; transform-origin: left; }
+  .desktop-nav a.active::after { transform: scaleX(1); }
+  .desktop-nav a:hover { color: var(--crimson); }
+  .desktop-nav a:hover::after { transform: scaleX(1); }
+  .cta-apply { background: var(--crimson); color: var(--white) !important; padding: 0.4rem 1rem !important; border-radius: 2px; margin-left: 0.3rem; white-space: nowrap; }
+  .cta-apply::after { display: none !important; }
+  .cta-apply:hover { background: var(--crimson-dark) !important; }
+  
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 101; }
+  .hamburger-icon { width: 26px; height: 20px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+  .hamburger-icon span { display: block; width: 100%; height: 2.5px; background: var(--crimson); border-radius: 2px; transition: all 0.3s ease; }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(2) { opacity: 0; }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+  
+  .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 99; padding: 70px 1.5rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(-100%); transition: transform 0.3s ease-in-out; max-height: 100vh; overflow-y: auto; }
+  .mobile-nav.open { transform: translateY(0); }
+  .mobile-nav a { display: block; font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.9rem 0; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.06em; }
+  .mobile-nav a.active { color: var(--crimson); }
+  .mobile-nav a:hover { color: var(--crimson); }
+  .mobile-nav .cta-apply-mobile { background: var(--crimson); color: var(--white) !important; text-align: center; margin-top: 0.8rem; border-radius: 4px; }
+  
+  .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.6rem 0; position: relative; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; }
+  .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 0.8rem; font-family: var(--sans); font-size: 13px; outline: none; background: var(--white); min-width: 160px; }
+  .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1rem; font-family: var(--sans); font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .search-form .clear-btn { background: var(--mid); }
+  .search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 1px solid var(--border); border-top: none; max-height: 400px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .search-results.active { display: block; }
+  .search-result-item { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+  .search-result-item:hover { background: var(--light); }
+  .search-result-item a { text-decoration: none; color: inherit; display: block; }
+  .search-result-title { font-weight: 600; color: var(--crimson); font-size: 13px; margin-bottom: 0.2rem; }
+  .search-result-snippet { font-size: 12px; color: var(--mid); }
+  .search-result-page { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-top: 0.2rem; }
+  .no-results { padding: 1.5rem; text-align: center; color: var(--mid); font-size: 13px; }
+  
+  .page-header { background: var(--black); padding: 3rem 0 2rem; position: relative; overflow: hidden; }
+  .page-header-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0a0a0a 0%, #1a0008 40%, #2a0010 100%); }
+  .page-header-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(169,28,48,0.04) 60px, rgba(169,28,48,0.04) 61px); }
+  .page-header-content { position: relative; z-index: 2; }
+  .breadcrumb { font-family: var(--sans); font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .page-title { font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 3rem); color: var(--white); font-weight: 700; line-height: 1.2; }
+  
+  .section { padding: 2.5rem 0; }
+  .section-alt { background: var(--light); }
+  .section-label { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+  .section-label::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--crimson); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.3rem, 5vw, 2.2rem); font-weight: 700; color: var(--black); line-height: 1.2; margin-bottom: 0.8rem; }
+  .section-intro { font-size: 14px; color: var(--mid); max-width: 760px; line-height: 1.6; margin-bottom: 1.5rem; }
+  
+  .course-detail { background: var(--white); border-left: 4px solid var(--crimson); padding: 2.5rem; margin-bottom: 3rem; scroll-margin-top: 120px; }
+  .course-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .course-title-block h2 { font-family: var(--serif); font-size: clamp(1.4rem, 4vw, 2rem); color: var(--crimson); margin-bottom: 0.5rem; }
+  .course-subtitle { font-size: 14px; color: var(--mid); }
+  .course-badge { background: var(--crimson); color: var(--white); padding: 0.5rem 1rem; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 2px; white-space: nowrap; }
+  
+  .course-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: var(--light); padding: 1.5rem; margin-bottom: 1.5rem; }
+  .meta-item { }
+  .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem; }
+  .meta-value { font-family: var(--serif); font-size: 1.1rem; color: var(--black); font-weight: 600; }
+  
+  .course-content h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--black); margin: 1.5rem 0 0.8rem; }
+  .course-content p { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1rem; }
+  .course-content ul { margin: 1rem 0 1.5rem 1.5rem; }
+  .course-content li { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 0.5rem; }
+  
+  .course-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; white-space: nowrap; }
+  .btn-primary:hover { background: var(--crimson-light); }
+  .btn-outline { background: transparent; color: var(--crimson); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: 2px solid var(--crimson); cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; white-space: nowrap; }
+  .btn-outline:hover { background: var(--crimson); color: var(--white); }
+  
+  .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .benefit-card { background: var(--white); padding: 1.5rem; border-top: 3px solid var(--crimson); }
+  .benefit-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .benefit-card h3 { font-family: var(--serif); font-size: 1rem; color: var(--black); margin-bottom: 0.5rem; }
+  .benefit-card p { font-size: 13px; color: var(--mid); line-height: 1.5; }
+  
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--crimson); color: var(--white); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 90; transition: background 0.2s; }
+  .back-to-top.visible { display: flex; }
+  .back-to-top:hover { background: var(--crimson-dark); }
+  
+  footer { background: #111; color: rgba(255,255,255,0.7); padding: 2.5rem 0 0; }
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  footer h5 { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 0.8rem; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.4rem; }
+  footer ul li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  footer ul li a:hover { color: var(--gold); }
+  .footer-brand p { font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+  .footer-logo { font-family: var(--serif); font-size: 1rem; color: var(--white); font-weight: 700; margin-bottom: 0.4rem; }
+  .footer-bottom { padding: 1.2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; font-size: 10px; color: rgba(255,255,255,0.3); }
+  .footer-bottom a { color: inherit; text-decoration: none; }
+  .footer-bottom a:hover { color: var(--gold); }
+  
+  /* Responsive Breakpoints */
+  @media (max-width: 992px) {
+    .container { padding: 0 1.2rem; }
+    .benefits-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .course-meta { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-nav { display: none; }
+    .mobile-menu-btn { display: block; }
+    .mobile-nav { display: block; }
+    .header-inner { padding: 0.6rem 1.2rem; }
+    .logo-emblem { width: 40px; height: 40px; font-size: 13px; }
+    .logo-name { font-size: 13px; }
+    .logo-sub { font-size: 8px; }
+    .topbar .container { flex-direction: column; text-align: center; gap: 0.4rem; }
+    .topbar-links { justify-content: center; gap: 0.8rem; }
+    .topbar .institute-name { font-size: 10px; }
+    .page-header { padding: 2rem 0 1.5rem; }
+    .section { padding: 1.8rem 0; }
+    .course-detail { padding: 1.5rem; }
+    .course-header { flex-direction: column; align-items: stretch; }
+    .course-actions { flex-direction: column; }
+    .course-actions .btn-primary, .course-actions .btn-outline { text-align: center; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+  
+  @media (max-width: 480px) {
+    .container { padding: 0 0.8rem; }
+    .search-form { flex-direction: column; align-items: stretch; }
+    .search-form button { width: 100%; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-brand { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span class="institute-name">Shree Sai Institute of Technology — Ratlam, Madhya Pradesh</span>
+    <div class="topbar-links">
+      <a href="#">Students</a>
+      <a href="#">Faculty</a>
+      <a href="#">Alumni</a>
+      <a href="mailto:ssit2000@rediffmail.com">ssit2000@rediffmail.com</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo-block">
+      <div class="logo-emblem">SSIT</div>
+      <div class="logo-text">
+        <span class="logo-name">Shree Sai Institute<br>of Technology</span>
+        <span class="logo-sub">Est. 2000 · Ratlam, M.P.</span>
+      </div>
+    </a>
+    
+    <nav class="desktop-nav">
+      <a href="about.html">About Us</a>
+      <a href="courses.html" class="active">Courses</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="infrastructure.html">Infrastructure</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="contact.html" class="cta-apply">Apply Now</a>
+    </nav>
+    
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+  </div>
+  
+  <div class="mobile-nav" id="mobileNav">
+    <a href="about.html">About Us</a>
+    <a href="courses.html" class="active">Courses</a>
+    <a href="events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="infrastructure.html">Infrastructure</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="contact.html" class="cta-apply-mobile">Apply Now</a>
+  </div>
+</header>
+
+<div class="search-bar">
+  <div class="container">
+    <form class="search-form" id="searchForm">
+      <input type="search" id="searchInput" placeholder="Search SSIT — programs, events, news…">
+      <button type="submit">Search</button>
+      <button type="button" class="clear-btn" id="clearBtn" style="display:none;">Clear</button>
+    </form>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-pattern"></div>
+  <div class="container page-header-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / Courses
+    </div>
+    <h1 class="page-title">Academic Programmes</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Our Offerings</div>
+    <h2 class="section-title">Professional Teacher Training Programmes</h2>
+    <p class="section-intro">SSIT offers two comprehensive teacher education programmes approved by the National Council for Teacher Education (NCTE), designed to prepare competent, confident educators who will shape the future of India's education system.</p>
+    
+    <!-- B.Ed Programme -->
+    <div class="course-detail" id="bed">
+      <div class="course-header">
+        <div class="course-title-block">
+          <h2>Bachelor of Education (B.Ed)</h2>
+          <p class="course-subtitle">Professional Degree for Secondary School Teaching</p>
+        </div>
+        <div class="course-badge">2 Years · Full Time</div>
+      </div>
+      
+      <div class="course-meta">
+        <div class="meta-item">
+          <div class="meta-label">Duration</div>
+          <div class="meta-value">2 Years (4 Semesters)</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Eligibility</div>
+          <div class="meta-value">Bachelor's Degree with 50%</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Career Path</div>
+          <div class="meta-value">Secondary School Teacher</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Approval</div>
+          <div class="meta-value">NCTE Approved</div>
+        </div>
+      </div>
+      
+      <div class="course-content">
+        <h3>About the Programme</h3>
+        <p>The Bachelor of Education (B.Ed) programme is a professional undergraduate degree designed for graduates who aspire to teach at secondary and senior secondary levels (Classes 9-12). This comprehensive two-year programme combines theoretical knowledge with practical teaching experience, preparing educators who can inspire and guide young minds.</p>
+        
+        <h3>Eligibility Criteria</h3>
+        <ul>
+          <li>Bachelor's degree in any discipline from a recognized university</li>
+          <li>Minimum 50% aggregate marks (45% for reserved categories)</li>
+          <li>Preference given to candidates with subjects relevant to school curriculum</li>
+        </ul>
+        
+        <h3>Syllabus Highlights</h3>
+        <ul>
+          <li><strong>Pedagogical Theory:</strong> Childhood and Growing Up, Learning and Teaching, Contemporary Indian Education</li>
+          <li><strong>Subject Methodology:</strong> Specialized teaching methods for chosen subjects (Mathematics, Science, Social Studies, Languages, etc.)</li>
+          <li><strong>Practical Training:</strong> School internships, lesson planning, classroom management, assessment techniques</li>
+          <li><strong>ICT Integration:</strong> Educational technology, digital resources, online teaching methodologies</li>
+          <li><strong>Research Skills:</strong> Educational research methods, action research, project work</li>
+        </ul>
+        
+        <h3>Career Opportunities</h3>
+        <p>B.Ed graduates are qualified to teach in secondary and senior secondary schools (Classes 9-12) across India. Career opportunities include positions in government schools, private schools, CBSE/ICSE/State Board institutions, international schools, and educational consultancy. Graduates can also pursue higher studies (M.Ed, Ph.D) or specialize in educational administration, curriculum development, and teacher training.</p>
+        
+        <h3>Fees Structure</h3>
+        <p><strong>Total Programme Fee:</strong> Contact admissions office for current fee structure and payment plans. Financial assistance and scholarships available for eligible candidates.</p>
+      </div>
+      
+      <div class="course-actions">
+        <button class="btn-primary download-brochure" data-course="B.Ed">Download Brochure</button>
+        <a href="contact.html?subject=B.Ed Admission Inquiry" class="btn-outline">Apply for B.Ed</a>
+      </div>
+    </div>
+    
+    <!-- D.El.Ed Programme -->
+    <div class="course-detail" id="deled">
+      <div class="course-header">
+        <div class="course-title-block">
+          <h2>Diploma in Elementary Education (D.El.Ed)</h2>
+          <p class="course-subtitle">Professional Diploma for Primary School Teaching</p>
+        </div>
+        <div class="course-badge">2 Years · Full Time</div>
+      </div>
+      
+      <div class="course-meta">
+        <div class="meta-item">
+          <div class="meta-label">Duration</div>
+          <div class="meta-value">2 Years (4 Semesters)</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Eligibility</div>
+          <div class="meta-value">10+2 with 50%</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Career Path</div>
+          <div class="meta-value">Primary School Teacher</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Approval</div>
+          <div class="meta-value">NCTE Approved</div>
+        </div>
+      </div>
+      
+      <div class="course-content">
+        <h3>About the Programme</h3>
+        <p>The Diploma in Elementary Education (D.El.Ed) is a nationally recognized diploma programme designed to prepare teachers for primary and upper-primary levels (Classes 1-8). Aligned with NCTE norms and Right to Education (RTE) mandates, this programme focuses on child-centered pedagogy, foundational literacy and numeracy, and creating inclusive learning environments.</p>
+        
+        <h3>Eligibility Criteria</h3>
+        <ul>
+          <li>Higher Secondary (10+2) or equivalent from a recognized board</li>
+          <li>Minimum 50% aggregate marks (45% for reserved categories)</li>
+          <li>Age limit as per state government norms</li>
+        </ul>
+        
+        <h3>Syllabus Highlights</h3>
+        <ul>
+          <li><strong>Child Development:</strong> Understanding child psychology, growth stages, learning patterns</li>
+          <li><strong>Foundational Skills:</strong> Language development, mathematics concepts, environmental studies</li>
+          <li><strong>Pedagogical Methods:</strong> Activity-based learning, play-way methods, storytelling techniques</li>
+          <li><strong>Inclusive Education:</strong> Teaching children with diverse needs, special education basics</li>
+          <li><strong>Practicum:</strong> Classroom observations, teaching practice in primary schools, lesson demonstrations</li>
+          <li><strong>Community Engagement:</strong> Parent-teacher collaboration, community resources in education</li>
+        </ul>
+        
+        <h3>Career Opportunities</h3>
+        <p>D.El.Ed graduates are eligible to teach in primary and upper-primary schools (Classes 1-8) as mandated by the RTE Act. Career opportunities include positions in government primary schools, private schools, NGO-run educational initiatives, and early childhood education centers. Graduates can also pursue B.Ed for secondary teaching or specialize in early childhood education, remedial teaching, and curriculum development for primary education.</p>
+        
+        <h3>Fees Structure</h3>
+        <p><strong>Total Programme Fee:</strong> Contact admissions office for current fee structure and installment options. Government scholarships and fee concessions available for eligible students.</p>
+      </div>
+      
+      <div class="course-actions">
+        <button class="btn-primary download-brochure" data-course="D.El.Ed">Download Brochure</button>
+        <a href="contact.html?subject=D.El.Ed Admission Inquiry" class="btn-outline">Apply for D.El.Ed</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Why Choose SSIT</div>
+    <h2 class="section-title">Benefits of Studying at SSIT</h2>
+    
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🎓</div>
+        <h3>NCTE Approved</h3>
+        <p>Our programmes are fully approved by the National Council for Teacher Education, ensuring your degree is recognized nationwide.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">👨‍🏫</div>
+        <h3>Experienced Faculty</h3>
+        <p>Learn from highly qualified professors with extensive teaching experience and deep subject matter expertise.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📚</div>
+        <h3>Comprehensive Curriculum</h3>
+        <p>Our syllabus balances theoretical knowledge with practical skills, preparing you for real classroom challenges.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏫</div>
+        <h3>Hands-On Training</h3>
+        <p>Extensive practicum and internship opportunities in partnered schools give you real teaching experience.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💼</div>
+        <h3>Career Placement</h3>
+        <p>Our placement cell assists graduates in finding teaching positions in reputed schools across Madhya Pradesh.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌟</div>
+        <h3>25+ Years of Excellence</h3>
+        <p>A proven track record since 2000, with hundreds of successful alumni teaching across the nation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="back-to-top" id="backToTop">↑</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">Shree Sai Institute of Technology</div>
+        <p>Ratlam Maa Sharda Uchcha Shiksha Samiti<br>Near Morning Star CBSE School, Jaora Road<br>Ratlam, Madhya Pradesh 457001</p>
+        <p style="margin-top:0.5rem;font-size:11px;">
+          <a href="tel:+917412261052" style="color:rgba(255,255,255,0.55);text-decoration:none;">+91 7412 261 052</a><br>
+          <a href="mailto:ssit2000@rediffmail.com" style="color:rgba(255,255,255,0.55);text-decoration:none;word-break:break-all;">ssit2000@rediffmail.com</a>
+        </p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Academics</h5>
+        <ul>
+          <li><a href="courses.html#bed">B.Ed Programme</a></li>
+          <li><a href="courses.html#deled">D.El.Ed Programme</a></li>
+          <li><a href="#">Syllabus &amp; Results</a></li>
+          <li><a href="about.html">Faculty</a></li>
+          <li><a href="infrastructure.html">Infrastructure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#">Student Portal</a></li>
+          <li><a href="#">Alumni</a></li>
+          <li><a href="https://ncte.gov.in" target="_blank">NCTE Website</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Shree Sai Institute of Technology, Ratlam. All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Accessibility</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile Menu
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', function() {
+      this.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileMenuBtn.classList.remove('active');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  
+  // Search Functionality
+  const searchContent = [
+    { title: 'About SSIT', page: 'About Us', url: 'about.html', content: 'Established 2000 Ratlam Maa Sharda Uchcha Shiksha Samiti NCTE affiliated teacher education' },
+    { title: 'B.Ed Programme', page: 'Courses', url: 'courses.html#bed', content: 'Bachelor of Education 2 years secondary teacher training pedagogy 50% marks eligibility' },
+    { title: 'D.El.Ed Programme', page: 'Courses', url: 'courses.html#deled', content: 'Diploma Elementary Education primary teacher 2 years 10+2 eligibility' },
+    { title: 'Campus Infrastructure', page: 'Infrastructure', url: 'infrastructure.html', content: 'Classrooms library computer labs science sports facilities' },
+    { title: 'Contact Us', page: 'Contact', url: 'contact.html', content: 'Address phone email admission inquiry campus visit' },
+    { title: 'Events Calendar', page: 'Events', url: 'events.html', content: 'Annual sports tech fest parent meeting graduation ceremony' },
+    { title: 'Photo Gallery', page: 'Gallery', url: 'gallery.html', content: 'Campus photos classrooms library events graduation pictures' },
+  ];
+  
+  const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('clearBtn');
+  
+  searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    performSearch();
+  });
+  
+  searchInput.addEventListener('input', function() {
+    if (this.value.trim()) {
+      clearBtn.style.display = 'block';
+    } else {
+      clearBtn.style.display = 'none';
+      searchResults.classList.remove('active');
+    }
+  });
+  
+  clearBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    searchResults.classList.remove('active');
+    this.style.display = 'none';
+  });
+  
+  function performSearch() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) return;
+    
+    const results = searchContent.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.content.toLowerCase().includes(query)
+    );
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+    } else {
+      searchResults.innerHTML = results.map(result => `
+        <div class="search-result-item">
+          <a href="${result.url}">
+            <div class="search-result-title">${result.title}</div>
+            <div class="search-result-snippet">${result.content.substring(0, 100)}...</div>
+            <div class="search-result-page">Page: ${result.page}</div>
+          </a>
+        </div>
+      `).join('');
+    }
+    
+    searchResults.classList.add('active');
+  }
+  
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-bar')) {
+      searchResults.classList.remove('active');
+    }
+  });
+  
+  // Download Brochure Buttons
+  const brochureButtons = document.querySelectorAll('.download-brochure');
+  brochureButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const course = this.getAttribute('data-course');
+      alert(`Brochure download started for ${course} programme. The PDF will be available shortly.`);
+    });
+  });
+  
+  // Check URL for hash and scroll to course
+  window.addEventListener('load', function() {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    }
+  });
+  
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  
+  backToTop.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  
+  // Scroll Animations
+  (function() {
+    const animatedElements = [
+      '.course-detail', '.benefit-card', '.fade-up',
+      '.section-label', '.section-title', '.section-intro'
+    ];
+    const selector = animatedElements.join(',');
+    
+    function checkVisibility() {
+      const elements = document.querySelectorAll(selector);
+      const windowHeight = window.innerHeight;
+      const revealThreshold = 80;
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        if (elementTop < windowHeight - revealThreshold && elementBottom > 0) {
+          element.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('load', () => {
+      checkVisibility();
+      setTimeout(checkVisibility, 300);
+    });
+    
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          checkVisibility();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shree Sai Institute of Technology — Ratlam</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --crimson: #A51C30;
+    --crimson-dark: #8b1528;
+    --crimson-light: #c4243c;
+    --gold: #C9A34E;
+    --gold-light: #e8c97a;
+    --black: #1a1a1a;
+    --dark: #2d2d2d;
+    --mid: #5a5a5a;
+    --muted: #888;
+    --light: #f5f3f0;
+    --border: #ddd8d0;
+    --white: #fff;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Source Sans 3', Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--black); background: var(--white); line-height: 1.6; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  .topbar { background: var(--crimson); color: rgba(255,255,255,0.85); font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 0; }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; }
+  .topbar a { color: inherit; text-decoration: none; }
+  .topbar a:hover { color: var(--gold-light); }
+  .topbar-links { display: flex; gap: 1.5rem; }
+  header { background: var(--white); border-bottom: 3px solid var(--crimson); position: sticky; top: 0; z-index: 100; }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1160px; margin: 0 auto; }
+  .logo-block { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+  .logo-emblem { width: 56px; height: 56px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-family: var(--serif); font-size: 18px; font-weight: 700; flex-shrink: 0; letter-spacing: -1px; }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name { font-family: var(--serif); font-size: 18px; color: var(--crimson); line-height: 1.2; font-weight: 700; }
+  .logo-sub { font-family: var(--sans); font-size: 11px; color: var(--mid); text-transform: uppercase; letter-spacing: 0.1em; }
+  nav { display: flex; align-items: center; gap: 0; }
+  nav a { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.5rem 0.9rem; position: relative; text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s; }
+  nav a::after { content: ''; position: absolute; bottom: -3px; left: 0.9rem; right: 0.9rem; height: 3px; background: var(--crimson); transform: scaleX(0); transition: transform 0.2s; transform-origin: left; }
+  nav a:hover { color: var(--crimson); }
+  nav a:hover::after { transform: scaleX(1); }
+  .cta-apply { background: var(--crimson); color: var(--white) !important; padding: 0.5rem 1.25rem !important; border-radius: 2px; margin-left: 0.5rem; }
+  .cta-apply::after { display: none !important; }
+  .cta-apply:hover { background: var(--crimson-dark) !important; color: var(--white) !important; }
+  .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.75rem 0; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 480px; }
+  .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 1rem; font-family: var(--sans); font-size: 14px; outline: none; background: var(--white); }
+  .search-form input:focus { border-color: var(--crimson); }
+  .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1.25rem; font-family: var(--sans); font-size: 14px; cursor: pointer; }
+  .hero { background: var(--black); min-height: 560px; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0a0a0a 0%, #1a0008 40%, #2a0010 100%); }
+  .hero-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(169,28,48,0.04) 60px, rgba(169,28,48,0.04) 61px), repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(169,28,48,0.04) 60px, rgba(169,28,48,0.04) 61px); }
+  .hero-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--crimson); }
+  .hero-content { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 5rem 2rem; }
+  .hero-label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .hero-label::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--gold); }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4rem); color: var(--white); font-weight: 700; line-height: 1.15; max-width: 720px; margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p { font-size: 18px; color: rgba(255,255,255,0.72); max-width: 540px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.85rem 2rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--crimson-light); }
+  .btn-outline { background: transparent; color: var(--white); font-family: var(--sans); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.85rem 2rem; border: 1.5px solid rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .stats-bar { background: var(--crimson); padding: 0; }
+  .stats-bar .container { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-item { padding: 2rem 1.5rem; border-right: 1px solid rgba(255,255,255,0.15); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--serif); font-size: 2.4rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.65); }
+  .section { padding: 5rem 0; }
+  .section-alt { background: var(--light); }
+  .section-label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-label::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--crimson); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--black); line-height: 1.2; margin-bottom: 1rem; }
+  .section-intro { font-size: 17px; color: var(--mid); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-img-placeholder { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #c8b8a0 0%, #a89070 100%); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1rem; color: rgba(80,50,20,0.5); letter-spacing: 0.05em; position: relative; overflow: hidden; }
+  .about-img-badge { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--crimson); color: var(--white); padding: 1.5rem; font-family: var(--serif); text-align: center; min-width: 120px; }
+  .about-img-badge strong { display: block; font-size: 2rem; line-height: 1; margin-bottom: 0.3rem; }
+  .about-img-badge span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .about-visual { position: relative; }
+  .about-points { list-style: none; margin: 1.5rem 0 2rem; }
+  .about-points li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--dark); }
+  .about-points li::before { content: ''; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--crimson); margin-top: 0.55rem; }
+  .link-arrow { color: var(--crimson); text-decoration: none; font-family: var(--sans); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 0.4rem; border-bottom: 2px solid var(--crimson); padding-bottom: 2px; transition: gap 0.2s; }
+  .link-arrow:hover { gap: 0.7rem; }
+  .news-sidebar-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; }
+  .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .news-card { border-top: 3px solid var(--crimson); padding-top: 1.25rem; }
+  .news-card-tag { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--crimson); margin-bottom: 0.5rem; }
+  .news-card h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--black); line-height: 1.3; margin-bottom: 0.5rem; }
+  .news-card p { font-size: 14px; color: var(--mid); line-height: 1.6; margin-bottom: 0.75rem; }
+  .news-card-date { font-size: 12px; color: var(--muted); }
+  .sidebar-block { margin-bottom: 2.5rem; }
+  .sidebar-block h4 { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.6rem; margin-bottom: 1rem; }
+  .feed-item { display: flex; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-item-dot { flex-shrink: 0; width: 8px; height: 8px; background: var(--crimson); border-radius: 50%; margin-top: 6px; }
+  .feed-item-text { font-size: 13.5px; color: var(--dark); line-height: 1.5; }
+  .feed-item:hover .feed-item-text { color: var(--crimson); }
+  .feed-tag { display: inline-block; background: #fce8eb; color: var(--crimson); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 2px; margin-bottom: 3px; }
+  .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); }
+  .program-card { padding: 2.5rem; border-right: 1px solid var(--border); position: relative; overflow: hidden; transition: background 0.25s; }
+  .program-card:last-child { border-right: none; }
+  .program-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--crimson); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .program-card:hover::before { transform: scaleX(1); }
+  .program-card:hover { background: #fdf8f8; }
+  .program-num { font-family: var(--serif); font-size: 3rem; color: var(--border); font-weight: 700; line-height: 1; margin-bottom: 0.5rem; }
+  .program-card h3 { font-family: var(--serif); font-size: 1.25rem; color: var(--black); margin-bottom: 0.75rem; }
+  .program-card p { font-size: 14px; color: var(--mid); line-height: 1.6; margin-bottom: 1.25rem; }
+  .program-duration { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--crimson); font-weight: 600; }
+  .toppers-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+  .topper-card { text-align: center; }
+  .topper-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-dark) 100%); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--white); border: 3px solid var(--border); }
+  .topper-rank { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); font-weight: 600; margin-bottom: 0.3rem; }
+  .topper-name { font-family: var(--serif); font-size: 0.9rem; color: var(--black); margin-bottom: 0.25rem; }
+  .topper-score { font-size: 1.3rem; font-family: var(--serif); font-weight: 700; color: var(--crimson); margin-bottom: 0.2rem; }
+  .topper-year { font-size: 11px; color: var(--muted); }
+  .quote-band { background: var(--crimson); padding: 4rem 0; text-align: center; }
+  .quote-band blockquote { font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem); font-style: italic; color: var(--white); max-width: 760px; margin: 0 auto 1.25rem; line-height: 1.5; }
+  .quote-band cite { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.65); font-style: normal; }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .cta-card { padding: 4rem; }
+  .cta-card-light { background: var(--light); }
+  .cta-card-dark { background: var(--black); }
+  .cta-card h3 { font-family: var(--serif); font-size: 1.8rem; margin-bottom: 1rem; }
+  .cta-card-light h3 { color: var(--black); }
+  .cta-card-dark h3 { color: var(--white); }
+  .cta-card p { font-size: 15px; margin-bottom: 2rem; }
+  .cta-card-light p { color: var(--mid); }
+  .cta-card-dark p { color: rgba(255,255,255,0.6); }
+  footer { background: #111; color: rgba(255,255,255,0.7); padding: 4rem 0 0; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  footer h5 { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.6rem; }
+  footer ul li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  footer ul li a:hover { color: var(--gold-light); }
+  .footer-brand p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.5); margin-top: 0.75rem; }
+  .footer-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--white); font-weight: 700; margin-bottom: 0.5rem; }
+  .footer-bottom { padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+  .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  @media (max-width: 900px) {
+    .about-grid, .news-sidebar-grid, .cta-grid, .footer-grid { grid-template-columns: 1fr; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .programs-grid .program-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .toppers-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats-bar .container { grid-template-columns: repeat(2, 1fr); }
+    nav { display: none; }
+    .about-img-badge { position: static; margin-top: 1rem; display: inline-block; }
+  }
+  @media (max-width: 540px) {
+    .toppers-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>Shree Sai Institute of Technology — Ratlam, Madhya Pradesh</span>
+    <div class="topbar-links">
+      <a href="#">Students</a>
+      <a href="#">Faculty</a>
+      <a href="#">Alumni</a>
+      <a href="mailto:ssit2000@rediffmail.com">ssit2000@rediffmail.com</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo-block">
+      <div class="logo-emblem">SSIT</div>
+      <div class="logo-text">
+        <span class="logo-name">Shree Sai Institute<br>of Technology</span>
+        <span class="logo-sub">Est. 2000 · Ratlam, M.P.</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#">About</a>
+      <a href="#">Courses</a>
+      <a href="#">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Infrastructure</a>
+      <a href="#">Contact</a>
+      <a href="#" class="cta-apply">Apply Now</a>
+    </nav>
+  </div>
+</header>
+
+<div class="search-bar">
+  <div class="container">
+    <form class="search-form" onsubmit="return false;">
+      <input type="search" placeholder="Search SSIT — programs, events, news…">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-label">Excellence in Education</div>
+    <h1>Shaping the <em>Teachers</em><br>of Tomorrow</h1>
+    <p>SSIT offers a transformative environment where aspiring educators discover their calling, develop their craft, and grow into leaders who illuminate the lives of future generations.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary">Explore Programs</a>
+      <a href="#" class="btn-outline">About SSIT</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">Years of Excellence</div></div>
+    <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Professional Programs</div></div>
+    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Graduates</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">NCTE Approved</div></div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-img-placeholder">
+          <div style="text-align:center; position:relative; z-index:1; opacity:0.5; font-style:italic;">Campus Photo</div>
+        </div>
+        <div class="about-img-badge"><strong>NCTE</strong><span>Approved</span></div>
+      </div>
+      <div class="about-content">
+        <div class="section-label">About the Institute</div>
+        <h2 class="section-title">A Legacy of Shaping Educators</h2>
+        <p class="section-intro">Founded by the Ratlam Maa Sharda Uchcha Shiksha Samiti, SSIT stands as a centre of excellence for teacher education in Madhya Pradesh — nurturing competent, compassionate educators since 2000.</p>
+        <ul class="about-points">
+          <li>Located near Ratlam Railway Station, with excellent connectivity</li>
+          <li>Spacious, modern campus within Ratlam Municipal Corporation limits</li>
+          <li>Fully equipped classrooms, labs, and library</li>
+          <li>Affiliated with the National Council for Teacher Education (NCTE)</li>
+          <li>Dedicated faculty with deep academic expertise</li>
+        </ul>
+        <a href="#" class="link-arrow">Our Full Story →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Latest from SSIT</div>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">News &amp; Announcements</h2>
+    <div class="news-sidebar-grid">
+      <div>
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-card-tag">Academic</div>
+            <h3>B.Ed Syllabus Released for 2024–25 Session</h3>
+            <p>The updated Bachelor of Education syllabus for the current academic year is now available for enrolled students.</p>
+            <div class="news-card-date">March 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Results</div>
+            <h3>B.Ed Examination Results Now Declared</h3>
+            <p>Results for the B.Ed programme are available via the university result portal for students to access directly online.</p>
+            <div class="news-card-date">February 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Admissions</div>
+            <h3>D.El.Ed Student List for 2024–25 Published</h3>
+            <p>The complete list of enrolled D.El.Ed students for the current academic session has been officially released.</p>
+            <div class="news-card-date">January 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Faculty</div>
+            <h3>Faculty List for Session 2024–25 Available</h3>
+            <p>View the complete roster of qualified faculty members guiding students through the current academic year.</p>
+            <div class="news-card-date">January 2025</div>
+          </div>
+        </div>
+      </div>
+      <aside>
+        <div class="sidebar-block">
+          <h4>Quick Links</h4>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text"><div class="feed-tag">New</div>B.Ed Syllabus 2024–25 (PDF)</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text"><div class="feed-tag">New</div>B.Ed Examination Results</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">Our Achievers (PDF)</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">D.El.Ed Student List 2024–25</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">B.Ed Student List 2024–25</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">Faculty List 2024–25</div></a>
+          <a href="https://ncte.gov.in" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">NCTE Council Website ↗</div></a>
+        </div>
+        <div class="sidebar-block">
+          <h4>Contact the Institute</h4>
+          <div style="font-size:14px;color:#444;line-height:1.8;">
+            Near Morning Star CBSE School<br>Jaora Road, Ratlam, M.P. 457001<br><br>
+            <a href="tel:+917412261052" style="color:var(--crimson);text-decoration:none;font-weight:600;">+91 7412 261 052</a><br>
+            <a href="tel:8839196934" style="color:var(--crimson);text-decoration:none;font-weight:600;">+91 8839 196 934</a><br>
+            <a href="mailto:ssit2000@rediffmail.com" style="color:var(--crimson);text-decoration:none;">ssit2000@rediffmail.com</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Academic Programmes</div>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Pathways to the Teaching Profession</h2>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-num">01</div>
+        <h3>B.Ed — Bachelor of Education</h3>
+        <p>A professional undergraduate degree for graduates aspiring to teach at secondary and senior secondary levels. Emphasises pedagogy, subject mastery, and classroom excellence.</p>
+        <div class="program-duration">2 Years · Full Time</div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">02</div>
+        <h3>D.El.Ed — Diploma in Elementary Education</h3>
+        <p>A nationally recognised diploma equipping candidates to teach at the primary and upper-primary level. Aligned with NCTE norms and RTE mandates.</p>
+        <div class="program-duration">2 Years · Full Time</div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">03</div>
+        <h3>Alumni &amp; Continuing Education</h3>
+        <p>SSIT's alumni network offers lifelong learning, professional workshops, and career support for graduates in the education sector across Madhya Pradesh.</p>
+        <div class="program-duration">Ongoing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote-band">
+  <div class="container">
+    <blockquote>"Education is not the filling of a pail, but the lighting of a fire."</blockquote>
+    <cite>— W.B. Yeats &nbsp;·&nbsp; The SSIT Philosophy</cite>
+  </div>
+</div>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Our Achievers</div>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Toppers of Distinction</h2>
+    <div class="toppers-grid">
+      <div class="topper-card">
+        <div class="topper-avatar">NP</div>
+        <div class="topper-rank">1st Rank · B.Ed</div>
+        <div class="topper-name">Neelam Pandya</div>
+        <div class="topper-score">83%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#8b1528,#5a0e1c)">AP</div>
+        <div class="topper-rank">2nd Rank · B.Ed</div>
+        <div class="topper-name">Aparana</div>
+        <div class="topper-score">82.5%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#6b1020,#3a0810)">PP</div>
+        <div class="topper-rank">3rd Rank · B.Ed</div>
+        <div class="topper-name">Payal Parihar</div>
+        <div class="topper-score">82%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar">MN</div>
+        <div class="topper-rank">1st Rank · D.El.Ed</div>
+        <div class="topper-name">Manjubala Nayama</div>
+        <div class="topper-score">80.51%</div>
+        <div class="topper-year">2019</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#8b1528,#5a0e1c)">SB</div>
+        <div class="topper-rank">2nd Rank · D.El.Ed</div>
+        <div class="topper-name">Saraswati Barupal</div>
+        <div class="topper-score">79.69%</div>
+        <div class="topper-year">2019</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#6b1020,#3a0810)">BD</div>
+        <div class="topper-rank">3rd Rank · D.El.Ed</div>
+        <div class="topper-name">Bhavna Dewada</div>
+        <div class="topper-score">79.17%</div>
+        <div class="topper-year">2019</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-grid">
+    <div class="cta-card cta-card-light">
+      <h3>Ready to Begin Your Journey?</h3>
+      <p>Applications for B.Ed and D.El.Ed programmes are open. Take the first step toward a rewarding career in education.</p>
+      <a href="#" class="btn-primary">Apply for Admission</a>
+    </div>
+    <div class="cta-card cta-card-dark">
+      <h3>Visit Our Campus</h3>
+      <p>Experience SSIT firsthand — tour our facilities, meet our faculty, and discover the community that awaits you.</p>
+      <a href="#" class="btn-outline">Plan a Visit</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">Shree Sai Institute of Technology</div>
+        <p>Ratlam Maa Sharda Uchcha Shiksha Samiti<br>Near Morning Star CBSE School, Jaora Road<br>Ratlam, Madhya Pradesh 457001</p>
+        <p style="margin-top:1rem;font-size:13px;">
+          <a href="tel:+917412261052" style="color:rgba(255,255,255,0.55);text-decoration:none;">+91 7412 261 052</a><br>
+          <a href="mailto:ssit2000@rediffmail.com" style="color:rgba(255,255,255,0.55);text-decoration:none;">ssit2000@rediffmail.com</a>
+        </p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Academics</h5>
+        <ul>
+          <li><a href="#">B.Ed Programme</a></li>
+          <li><a href="#">D.El.Ed Programme</a></li>
+          <li><a href="#">Syllabus &amp; Results</a></li>
+          <li><a href="#">Faculty</a></li>
+          <li><a href="#">Infrastructure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#">Student Portal</a></li>
+          <li><a href="#">Alumni</a></li>
+          <li><a href="https://ncte.gov.in">NCTE Website</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Shree Sai Institute of Technology, Ratlam. All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Accessibility</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
