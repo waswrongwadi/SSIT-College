@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shree Sai Institute of Technology — Ratlam</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --crimson: #A51C30;
+    --crimson-dark: #8b1528;
+    --crimson-light: #c4243c;
+    --gold: #C9A34E;
+    --gold-light: #e8c97a;
+    --black: #1a1a1a;
+    --dark: #2d2d2d;
+    --mid: #5a5a5a;
+    --muted: #888;
+    --light: #f5f3f0;
+    --border: #ddd8d0;
+    --white: #fff;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Source Sans 3', Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--black); background: var(--white); line-height: 1.6; overflow-x: hidden; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  
+  /* Scroll Animation Base Styles */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .stats-bar .stat-item, .program-card, .topper-card, .news-card, .cta-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stats-bar .stat-item.visible, .program-card.visible, .topper-card.visible, .news-card.visible, .cta-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .stats-bar .stat-item:nth-child(1) { transition-delay: 0s; }
+  .stats-bar .stat-item:nth-child(2) { transition-delay: 0.08s; }
+  .stats-bar .stat-item:nth-child(3) { transition-delay: 0.16s; }
+  .stats-bar .stat-item:nth-child(4) { transition-delay: 0.24s; }
+  .program-card:nth-child(1) { transition-delay: 0s; }
+  .program-card:nth-child(2) { transition-delay: 0.1s; }
+  .program-card:nth-child(3) { transition-delay: 0.2s; }
+  .topper-card:nth-child(1) { transition-delay: 0s; }
+  .topper-card:nth-child(2) { transition-delay: 0.05s; }
+  .topper-card:nth-child(3) { transition-delay: 0.1s; }
+  .topper-card:nth-child(4) { transition-delay: 0.15s; }
+  .topper-card:nth-child(5) { transition-delay: 0.2s; }
+  .topper-card:nth-child(6) { transition-delay: 0.25s; }
+  .news-card:nth-child(1) { transition-delay: 0s; }
+  .news-card:nth-child(2) { transition-delay: 0.08s; }
+  .news-card:nth-child(3) { transition-delay: 0.16s; }
+  .news-card:nth-child(4) { transition-delay: 0.24s; }
+  .cta-card:nth-child(1) { transition-delay: 0s; }
+  .cta-card:nth-child(2) { transition-delay: 0.12s; }
+  .sidebar-block, .feed-item {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .sidebar-block.visible, .feed-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .feed-item:nth-child(1) { transition-delay: 0s; }
+  .feed-item:nth-child(2) { transition-delay: 0.05s; }
+  .feed-item:nth-child(3) { transition-delay: 0.1s; }
+  .feed-item:nth-child(4) { transition-delay: 0.15s; }
+  .feed-item:nth-child(5) { transition-delay: 0.2s; }
+  .feed-item:nth-child(6) { transition-delay: 0.25s; }
+  .feed-item:nth-child(7) { transition-delay: 0.3s; }
+  
+  .hero-content .hero-label,
+  .hero-content h1,
+  .hero-content p,
+  .hero-content .hero-btns {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroReveal 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+  }
+  .hero-content .hero-label { animation-delay: 0.1s; }
+  .hero-content h1 { animation-delay: 0.25s; }
+  .hero-content p { animation-delay: 0.4s; }
+  .hero-content .hero-btns { animation-delay: 0.55s; }
+  
+  @keyframes heroReveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .quote-band blockquote, .quote-band cite {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .quote-band.visible blockquote, .quote-band.visible cite {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .quote-band blockquote { transition-delay: 0.1s; }
+  .quote-band cite { transition-delay: 0.25s; }
+  
+  .section-label, .section-title, .section-intro {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section-label.visible, .section-title.visible, .section-intro.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Topbar - Fixed for mobile */
+  .topbar { background: var(--crimson); color: rgba(255,255,255,0.85); font-family: var(--sans); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 0; }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  .topbar .institute-name { font-size: 11px; word-break: keep-all; white-space: normal; }
+  .topbar a { color: inherit; text-decoration: none; }
+  .topbar a:hover { color: var(--gold-light); }
+  .topbar-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  
+  header { background: var(--white); border-bottom: 3px solid var(--crimson); position: sticky; top: 0; z-index: 100; }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 2rem; max-width: 1160px; margin: 0 auto; }
+  .logo-block { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; flex-shrink: 0; }
+  .logo-emblem { width: 48px; height: 48px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-family: var(--serif); font-size: 16px; font-weight: 700; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name { font-family: var(--serif); font-size: 15px; color: var(--crimson); line-height: 1.2; font-weight: 700; }
+  .logo-sub { font-family: var(--sans); font-size: 9px; color: var(--mid); text-transform: uppercase; letter-spacing: 0.1em; }
+  
+  .desktop-nav { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+  .desktop-nav a { font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.5rem 0.7rem; position: relative; text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.2s; white-space: nowrap; }
+  .desktop-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0.7rem; right: 0.7rem; height: 3px; background: var(--crimson); transform: scaleX(0); transition: transform 0.2s; transform-origin: left; }
+  .desktop-nav a:hover { color: var(--crimson); }
+  .desktop-nav a:hover::after { transform: scaleX(1); }
+  .cta-apply { background: var(--crimson); color: var(--white) !important; padding: 0.4rem 1rem !important; border-radius: 2px; margin-left: 0.3rem; white-space: nowrap; }
+  .cta-apply::after { display: none !important; }
+  .cta-apply:hover { background: var(--crimson-dark) !important; }
+  
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 101; }
+  .hamburger-icon { width: 26px; height: 20px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+  .hamburger-icon span { display: block; width: 100%; height: 2.5px; background: var(--crimson); border-radius: 2px; transition: all 0.3s ease; }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(2) { opacity: 0; }
+  .mobile-menu-btn.active .hamburger-icon span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+  
+  .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 99; padding: 70px 1.5rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(-100%); transition: transform 0.3s ease-in-out; max-height: 100vh; overflow-y: auto; }
+  .mobile-nav.open { transform: translateY(0); }
+  .mobile-nav a { display: block; font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.9rem 0; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.06em; }
+  .mobile-nav a:hover { color: var(--crimson); }
+  .mobile-nav .cta-apply-mobile { background: var(--crimson); color: var(--white) !important; text-align: center; margin-top: 0.8rem; border-radius: 4px; }
+  
+  .search-bar { background: var(--light); border-bottom: 1px solid var(--border); padding: 0.6rem 0; }
+  .search-form { display: flex; align-items: center; gap: 0.5rem; max-width: 100%; flex-wrap: wrap; }
+  .search-form input { flex: 1; border: 1px solid var(--border); padding: 0.5rem 0.8rem; font-family: var(--sans); font-size: 13px; outline: none; background: var(--white); min-width: 160px; }
+  .search-form button { background: var(--crimson); color: var(--white); border: none; padding: 0.5rem 1rem; font-family: var(--sans); font-size: 13px; cursor: pointer; white-space: nowrap; }
+  
+  .hero { background: var(--black); min-height: 500px; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0a0a0a 0%, #1a0008 40%, #2a0010 100%); }
+  .hero-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(169,28,48,0.04) 60px, rgba(169,28,48,0.04) 61px), repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(169,28,48,0.04) 60px, rgba(169,28,48,0.04) 61px); }
+  .hero-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--crimson); }
+  .hero-content { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 3rem 1.5rem; }
+  .hero-label { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+  .hero-label::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
+  .hero h1 { font-family: var(--serif); font-size: clamp(1.6rem, 6vw, 4rem); color: var(--white); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p { font-size: clamp(13px, 3.5vw, 18px); color: rgba(255,255,255,0.72); max-width: 540px; margin-bottom: 1.8rem; line-height: 1.6; }
+  .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--crimson); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; white-space: nowrap; }
+  .btn-primary:hover { background: var(--crimson-light); }
+  .btn-outline { background: transparent; color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.7rem 1.5rem; border: 1.5px solid rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s; white-space: nowrap; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  
+  .stats-bar { background: var(--crimson); padding: 0; }
+  .stats-bar .container { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-item { padding: 1.2rem 0.5rem; border-right: 1px solid rgba(255,255,255,0.15); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--serif); font-size: clamp(1.3rem, 5vw, 2.2rem); font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-family: var(--sans); font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.65); word-break: keep-all; }
+  
+  .section { padding: 2.5rem 0; }
+  .section-alt { background: var(--light); }
+  .section-label { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+  .section-label::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--crimson); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.3rem, 5vw, 2.2rem); font-weight: 700; color: var(--black); line-height: 1.2; margin-bottom: 0.8rem; }
+  .section-intro { font-size: 14px; color: var(--mid); max-width: 560px; line-height: 1.6; margin-bottom: 1.5rem; }
+  
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .about-img-placeholder { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #c8b8a0 0%, #a89070 100%); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 0.9rem; color: rgba(80,50,20,0.5); position: relative; overflow: hidden; }
+  .about-img-badge { position: absolute; bottom: -1rem; right: -1rem; background: var(--crimson); color: var(--white); padding: 1rem; font-family: var(--serif); text-align: center; min-width: 90px; }
+  .about-img-badge strong { display: block; font-size: 1.5rem; line-height: 1; margin-bottom: 0.2rem; }
+  .about-img-badge span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .about-visual { position: relative; }
+  .about-points { list-style: none; margin: 1rem 0 1.5rem; }
+  .about-points li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--dark); }
+  .about-points li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--crimson); margin-top: 0.5rem; }
+  .link-arrow { color: var(--crimson); text-decoration: none; font-family: var(--sans); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 0.3rem; border-bottom: 2px solid var(--crimson); padding-bottom: 2px; transition: gap 0.2s; }
+  
+  .news-sidebar-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; }
+  .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .news-card { border-top: 3px solid var(--crimson); padding-top: 1rem; }
+  .news-card-tag { font-family: var(--sans); font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--crimson); margin-bottom: 0.4rem; }
+  .news-card h3 { font-family: var(--serif); font-size: 1rem; color: var(--black); line-height: 1.3; margin-bottom: 0.4rem; }
+  .news-card p { font-size: 12px; color: var(--mid); line-height: 1.5; margin-bottom: 0.5rem; }
+  .news-card-date { font-size: 10px; color: var(--muted); }
+  .sidebar-block { margin-bottom: 1.8rem; }
+  .sidebar-block h4 { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 0.8rem; }
+  .feed-item { display: flex; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }
+  .feed-item-dot { flex-shrink: 0; width: 6px; height: 6px; background: var(--crimson); border-radius: 50%; margin-top: 5px; }
+  .feed-item-text { font-size: 12px; color: var(--dark); line-height: 1.4; }
+  .feed-tag { display: inline-block; background: #fce8eb; color: var(--crimson); font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; padding: 1px 5px; border-radius: 2px; margin-bottom: 2px; }
+  
+  .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); }
+  .program-card { padding: 1.5rem; border-right: 1px solid var(--border); position: relative; overflow: hidden; transition: background 0.25s; }
+  .program-card:last-child { border-right: none; }
+  .program-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--crimson); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .program-card:hover::before { transform: scaleX(1); }
+  .program-num { font-family: var(--serif); font-size: 2rem; color: var(--border); font-weight: 700; line-height: 1; margin-bottom: 0.5rem; }
+  .program-card h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--black); margin-bottom: 0.5rem; }
+  .program-card p { font-size: 12px; color: var(--mid); line-height: 1.5; margin-bottom: 0.8rem; }
+  .program-duration { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--crimson); font-weight: 600; }
+  
+  .toppers-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .topper-card { text-align: center; }
+  .topper-avatar { width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-dark) 100%); margin: 0 auto 0.7rem; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--white); border: 2px solid var(--border); }
+  .topper-rank { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-weight: 600; margin-bottom: 0.2rem; }
+  .topper-name { font-family: var(--serif); font-size: 0.75rem; color: var(--black); margin-bottom: 0.2rem; }
+  .topper-score { font-size: 1rem; font-family: var(--serif); font-weight: 700; color: var(--crimson); margin-bottom: 0.1rem; }
+  .topper-year { font-size: 9px; color: var(--muted); }
+  
+  .quote-band { background: var(--crimson); padding: 2rem 0; text-align: center; }
+  .quote-band blockquote { font-family: var(--serif); font-size: clamp(1rem, 4vw, 1.6rem); font-style: italic; color: var(--white); max-width: 760px; margin: 0 auto 0.8rem; line-height: 1.4; }
+  .quote-band cite { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.65); font-style: normal; }
+  
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .cta-card { padding: 2rem 1.5rem; }
+  .cta-card-light { background: var(--light); }
+  .cta-card-dark { background: var(--black); }
+  .cta-card h3 { font-family: var(--serif); font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.8rem; }
+  .cta-card-light h3 { color: var(--black); }
+  .cta-card-dark h3 { color: var(--white); }
+  .cta-card p { font-size: 13px; margin-bottom: 1.2rem; }
+  .cta-card-light p { color: var(--mid); }
+  .cta-card-dark p { color: rgba(255,255,255,0.6); }
+  
+  footer { background: #111; color: rgba(255,255,255,0.7); padding: 2.5rem 0 0; }
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  footer h5 { font-family: var(--sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 0.8rem; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.4rem; }
+  footer ul li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .footer-brand p { font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+  .footer-logo { font-family: var(--serif); font-size: 1rem; color: var(--white); font-weight: 700; margin-bottom: 0.4rem; }
+  .footer-bottom { padding: 1.2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; font-size: 10px; color: rgba(255,255,255,0.3); }
+  
+  /* Responsive Breakpoints */
+  @media (max-width: 992px) {
+    .container { padding: 0 1.2rem; }
+    .toppers-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .stats-bar .container { grid-template-columns: repeat(2, 1fr); }
+    .news-sidebar-grid { gap: 1.5rem; }
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-nav { display: none; }
+    .mobile-menu-btn { display: block; }
+    .mobile-nav { display: block; }
+    .header-inner { padding: 0.6rem 1.2rem; }
+    .logo-emblem { width: 40px; height: 40px; font-size: 13px; }
+    .logo-name { font-size: 13px; }
+    .logo-sub { font-size: 8px; }
+    .topbar .container { flex-direction: column; text-align: center; gap: 0.4rem; }
+    .topbar-links { justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+    .topbar .institute-name { font-size: 10px; }
+    .hero-content { padding: 2rem 1.2rem; }
+    .hero { min-height: 420px; }
+    .stats-bar .stat-item { padding: 0.8rem 0.3rem; }
+    .stat-num { font-size: 1.2rem; }
+    .stat-label { font-size: 7px; }
+    .section { padding: 1.8rem 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .about-img-badge { position: static; margin-top: 0.8rem; display: inline-block; }
+    .news-sidebar-grid { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .program-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .program-card:last-child { border-bottom: none; }
+    .toppers-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .topper-avatar { width: 50px; height: 50px; font-size: 0.9rem; }
+    .topper-name { font-size: 0.7rem; }
+    .topper-score { font-size: 0.9rem; }
+    .cta-grid { grid-template-columns: 1fr; }
+    .cta-card { padding: 1.5rem; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .hero-btns .btn-primary, .hero-btns .btn-outline { padding: 0.5rem 1rem; font-size: 11px; white-space: nowrap; }
+  }
+  
+  @media (max-width: 480px) {
+    .container { padding: 0 0.8rem; }
+    .stats-bar .container { grid-template-columns: repeat(2, 1fr); }
+    .toppers-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-brand { text-align: center; }
+    .hero-btns { flex-direction: column; align-items: stretch; }
+    .hero-btns .btn-primary, .hero-btns .btn-outline { text-align: center; white-space: normal; }
+    .search-form { flex-direction: column; align-items: stretch; }
+    .search-form button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span class="institute-name">Shree Sai Institute of Technology — Ratlam, Madhya Pradesh</span>
+    <div class="topbar-links">
+      <a href="#">Students</a>
+      <a href="#">Faculty</a>
+      <a href="#">Alumni</a>
+      <a href="mailto:ssit2000@rediffmail.com">ssit2000@rediffmail.com</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo-block">
+      <div class="logo-emblem">SSIT</div>
+      <div class="logo-text">
+        <span class="logo-name">Shree Sai Institute<br>of Technology</span>
+        <span class="logo-sub">Est. 2000 · Ratlam, M.P.</span>
+      </div>
+    </a>
+    
+    <nav class="desktop-nav">
+      <a href="#">About</a>
+      <a href="#">Courses</a>
+      <a href="#">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Infrastructure</a>
+      <a href="#">Contact</a>
+      <a href="#" class="cta-apply">Apply Now</a>
+    </nav>
+    
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+  </div>
+  
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#">About</a>
+    <a href="#">Courses</a>
+    <a href="#">Events</a>
+    <a href="#">Gallery</a>
+    <a href="#">Infrastructure</a>
+    <a href="#">Contact</a>
+    <a href="#" class="cta-apply-mobile">Apply Now</a>
+  </div>
+</header>
+
+<div class="search-bar">
+  <div class="container">
+    <form class="search-form" onsubmit="return false;">
+      <input type="search" placeholder="Search SSIT — programs, events, news…">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-label">Excellence in Education</div>
+    <h1>Shaping the <em>Teachers</em><br>of Tomorrow</h1>
+    <p>SSIT offers a transformative environment where aspiring educators discover their calling, develop their craft, and grow into leaders who illuminate the lives of future generations.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary">Explore Programs</a>
+      <a href="#" class="btn-outline">About SSIT</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">Years of Excellence</div></div>
+    <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Professional Programs</div></div>
+    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Graduates</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">NCTE Approved</div></div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="about-img-placeholder">
+          <div style="text-align:center; position:relative; z-index:1; opacity:0.5; font-style:italic;">Campus Photo</div>
+        </div>
+        <div class="about-img-badge"><strong>NCTE</strong><span>Approved</span></div>
+      </div>
+      <div class="about-content">
+        <div class="section-label">About the Institute</div>
+        <h2 class="section-title">A Legacy of Shaping Educators</h2>
+        <p class="section-intro">Founded by the Ratlam Maa Sharda Uchcha Shiksha Samiti, SSIT stands as a centre of excellence for teacher education in Madhya Pradesh — nurturing competent, compassionate educators since 2000.</p>
+        <ul class="about-points">
+          <li>Located near Ratlam Railway Station, with excellent connectivity</li>
+          <li>Spacious, modern campus within Ratlam Municipal Corporation limits</li>
+          <li>Fully equipped classrooms, labs, and library</li>
+          <li>Affiliated with the National Council for Teacher Education (NCTE)</li>
+          <li>Dedicated faculty with deep academic expertise</li>
+        </ul>
+        <a href="#" class="link-arrow">Our Full Story →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Latest from SSIT</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">News &amp; Announcements</h2>
+    <div class="news-sidebar-grid">
+      <div>
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-card-tag">Academic</div>
+            <h3>B.Ed Syllabus Released for 2024–25 Session</h3>
+            <p>The updated Bachelor of Education syllabus for the current academic year is now available for enrolled students.</p>
+            <div class="news-card-date">March 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Results</div>
+            <h3>B.Ed Examination Results Now Declared</h3>
+            <p>Results for the B.Ed programme are available via the university result portal for students to access directly online.</p>
+            <div class="news-card-date">February 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Admissions</div>
+            <h3>D.El.Ed Student List for 2024–25 Published</h3>
+            <p>The complete list of enrolled D.El.Ed students for the current academic session has been officially released.</p>
+            <div class="news-card-date">January 2025</div>
+          </div>
+          <div class="news-card">
+            <div class="news-card-tag">Faculty</div>
+            <h3>Faculty List for Session 2024–25 Available</h3>
+            <p>View the complete roster of qualified faculty members guiding students through the current academic year.</p>
+            <div class="news-card-date">January 2025</div>
+          </div>
+        </div>
+      </div>
+      <aside>
+        <div class="sidebar-block">
+          <h4>Quick Links</h4>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text"><div class="feed-tag">New</div>B.Ed Syllabus 2024–25 (PDF)</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text"><div class="feed-tag">New</div>B.Ed Examination Results</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">Our Achievers (PDF)</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">D.El.Ed Student List 2024–25</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">B.Ed Student List 2024–25</div></a>
+          <a href="#" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">Faculty List 2024–25</div></a>
+          <a href="https://ncte.gov.in" class="feed-item"><div class="feed-item-dot"></div><div class="feed-item-text">NCTE Council Website ↗</div></a>
+        </div>
+        <div class="sidebar-block">
+          <h4>Contact the Institute</h4>
+          <div style="font-size:13px;color:#444;line-height:1.6;">
+            Near Morning Star CBSE School<br>Jaora Road, Ratlam, M.P. 457001<br><br>
+            <a href="tel:+917412261052" style="color:var(--crimson);text-decoration:none;font-weight:600;">+91 7412 261 052</a><br>
+            <a href="tel:8839196934" style="color:var(--crimson);text-decoration:none;font-weight:600;">+91 8839 196 934</a><br>
+            <a href="mailto:ssit2000@rediffmail.com" style="color:var(--crimson);text-decoration:none;word-break:break-all;">ssit2000@rediffmail.com</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Academic Programmes</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Pathways to the Teaching Profession</h2>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-num">01</div>
+        <h3>B.Ed — Bachelor of Education</h3>
+        <p>A professional undergraduate degree for graduates aspiring to teach at secondary and senior secondary levels. Emphasises pedagogy, subject mastery, and classroom excellence.</p>
+        <div class="program-duration">2 Years · Full Time</div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">02</div>
+        <h3>D.El.Ed — Diploma in Elementary Education</h3>
+        <p>A nationally recognised diploma equipping candidates to teach at the primary and upper-primary level. Aligned with NCTE norms and RTE mandates.</p>
+        <div class="program-duration">2 Years · Full Time</div>
+      </div>
+      <div class="program-card">
+        <div class="program-num">03</div>
+        <h3>Alumni &amp; Continuing Education</h3>
+        <p>SSIT's alumni network offers lifelong learning, professional workshops, and career support for graduates in the education sector across Madhya Pradesh.</p>
+        <div class="program-duration">Ongoing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote-band">
+  <div class="container">
+    <blockquote>"Education is not the filling of a pail, but the lighting of a fire."</blockquote>
+    <cite>— W.B. Yeats &nbsp;·&nbsp; The SSIT Philosophy</cite>
+  </div>
+</div>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Our Achievers</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Toppers of Distinction</h2>
+    <div class="toppers-grid">
+      <div class="topper-card">
+        <div class="topper-avatar">NP</div>
+        <div class="topper-rank">1st Rank · B.Ed</div>
+        <div class="topper-name">Neelam Pandya</div>
+        <div class="topper-score">83%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#8b1528,#5a0e1c)">AP</div>
+        <div class="topper-rank">2nd Rank · B.Ed</div>
+        <div class="topper-name">Aparana</div>
+        <div class="topper-score">82.5%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#6b1020,#3a0810)">PP</div>
+        <div class="topper-rank">3rd Rank · B.Ed</div>
+        <div class="topper-name">Payal Parihar</div>
+        <div class="topper-score">82%</div>
+        <div class="topper-year">2017–18</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar">MN</div>
+        <div class="topper-rank">1st Rank · D.El.Ed</div>
+        <div class="topper-name">Manjubala Nayama</div>
+        <div class="topper-score">80.51%</div>
+        <div class="topper-year">2019</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#8b1528,#5a0e1c)">SB</div>
+        <div class="topper-rank">2nd Rank · D.El.Ed</div>
+        <div class="topper-name">Saraswati Barupal</div>
+        <div class="topper-score">79.69%</div>
+        <div class="topper-year">2019</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-avatar" style="background:linear-gradient(135deg,#6b1020,#3a0810)">BD</div>
+        <div class="topper-rank">3rd Rank · D.El.Ed</div>
+        <div class="topper-name">Bhavna Dewada</div>
+        <div class="topper-score">79.17%</div>
+        <div class="topper-year">2019</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-grid">
+    <div class="cta-card cta-card-light">
+      <h3>Ready to Begin Your Journey?</h3>
+      <p>Applications for B.Ed and D.El.Ed programmes are open. Take the first step toward a rewarding career in education.</p>
+      <a href="#" class="btn-primary">Apply for Admission</a>
+    </div>
+    <div class="cta-card cta-card-dark">
+      <h3>Visit Our Campus</h3>
+      <p>Experience SSIT firsthand — tour our facilities, meet our faculty, and discover the community that awaits you.</p>
+      <a href="#" class="btn-outline">Plan a Visit</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">Shree Sai Institute of Technology</div>
+        <p>Ratlam Maa Sharda Uchcha Shiksha Samiti<br>Near Morning Star CBSE School, Jaora Road<br>Ratlam, Madhya Pradesh 457001</p>
+        <p style="margin-top:0.5rem;font-size:11px;">
+          <a href="tel:+917412261052" style="color:rgba(255,255,255,0.55);text-decoration:none;">+91 7412 261 052</a><br>
+          <a href="mailto:ssit2000@rediffmail.com" style="color:rgba(255,255,255,0.55);text-decoration:none;word-break:break-all;">ssit2000@rediffmail.com</a>
+        </p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Academics</h5>
+        <ul>
+          <li><a href="#">B.Ed Programme</a></li>
+          <li><a href="#">D.El.Ed Programme</a></li>
+          <li><a href="#">Syllabus &amp; Results</a></li>
+          <li><a href="#">Faculty</a></li>
+          <li><a href="#">Infrastructure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#">Student Portal</a></li>
+          <li><a href="#">Alumni</a></li>
+          <li><a href="https://ncte.gov.in">NCTE Website</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Shree Sai Institute of Technology, Ratlam. All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Accessibility</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', function() {
+      this.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      if (mobileNav.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileMenuBtn.classList.remove('active');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  
+  (function() {
+    const animatedElements = [
+      '.stat-item', '.program-card', '.topper-card', '.news-card', '.cta-card',
+      '.sidebar-block', '.feed-item', '.fade-up', '.quote-band',
+      '.section-label', '.section-title', '.section-intro'
+    ];
+    const selector = animatedElements.join(',');
+    
+    function checkVisibility() {
+      const elements = document.querySelectorAll(selector);
+      const windowHeight = window.innerHeight;
+      const revealThreshold = 80;
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        if (elementTop < windowHeight - revealThreshold && elementBottom > 0) {
+          element.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('load', () => {
+      checkVisibility();
+      setTimeout(checkVisibility, 300);
+    });
+    
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          checkVisibility();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    window.addEventListener('resize', () => { checkVisibility(); });
+  })();
+</script>
+
+</body>
+</html>
